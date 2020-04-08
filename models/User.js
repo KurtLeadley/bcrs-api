@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     dropDups: true,
   },
-  firstNmae: {
+  firstName: {
     type: String,
   },
   lastName: {
@@ -24,19 +24,18 @@ const UserSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
   },
-  address: {
-    street: {
-      type: String,
-    },
-    city: {
-      type: String,
-    },
-    state: {
-      type: String,
-    },
-    zipCode: {
-      type: String,
-    },
+
+  street: {
+    type: String,
+  },
+  city: {
+    type: String,
+  },
+  state: {
+    type: String,
+  },
+  zipCode: {
+    type: String,
   },
   email: {
     type: String,
