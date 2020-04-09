@@ -7,6 +7,7 @@ const crypto = require('crypto');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const mongooseDisabled = require('mongoose-disable');
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -46,7 +47,7 @@ const UserSchema = new mongoose.Schema({
       'Please enter a valid email address!',
     ],
   },
-  isDiabled: {
+  disabled: {
     type: Boolean,
     default: false,
   },
@@ -74,6 +75,9 @@ const UserSchema = new mongoose.Schema({
     type: Date,
   },
 });
+
+// Enable mongoose disable plugin
+UserSchema.plugin(mongooseDisabled, { validateBeforeDisable: false });
 
 // Encrypt password using bcrypt
 UserSchema.pre('save', async function (next) {

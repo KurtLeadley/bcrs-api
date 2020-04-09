@@ -3,11 +3,16 @@
  * Author: Loren Wetzel
  * Description: bcrs-api
  */
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const mongooseDisabled = require('mongoose-disable');
 
 const SecurityQuestionSchema = new mongoose.Schema({
   text: { type: String },
-  isDisabled: { type: Boolean, default: false },
+  disabled: { type: Boolean, default: false },
 });
 
-module.exports = mongoose.model("SecurityQuestion", SecurityQuestionSchema);
+SecurityQuestionSchema.plugin(mongooseDisabled, {
+  validateBeforeDisable: false,
+});
+
+module.exports = mongoose.model('SecurityQuestion', SecurityQuestionSchema);

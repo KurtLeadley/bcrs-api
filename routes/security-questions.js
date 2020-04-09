@@ -3,33 +3,33 @@
  * Author: Loren Wetzel
  * Description: bcrs-api
  */
-const express = require("express");
+const express = require('express');
 const {
   getSecQuestions,
   getSecQuestion,
   createSecQuestion,
   updateSecQuestion,
   deleteSecQuestion,
-} = require("../controllers/securityQuestion");
-const SecurityQuestion = require("../models/SecurityQuestion");
+} = require('../controllers/securityQuestion');
+const SecurityQuestion = require('../models/SecurityQuestion');
 
 const router = express.Router();
 
-const advancedResults = require("../middleware/advancedResults");
-const { protect, authorize } = require("../middleware/auth");
+const advancedResults = require('../middleware/advancedResults');
+const { protect, authorize } = require('../middleware/auth');
 
 router.use(protect);
-router.use(authorize("admin"));
+router.use(authorize('admin'));
 
 router
-  .route("/")
+  .route('/')
   .get(advancedResults(SecurityQuestion), getSecQuestions)
   .post(createSecQuestion);
 
 router
-  .route("/:id")
+  .route('/:id')
   .get(getSecQuestion)
   .put(updateSecQuestion)
-  .patch(deleteSecQuestion);
+  .delete(deleteSecQuestion);
 
 module.exports = router;

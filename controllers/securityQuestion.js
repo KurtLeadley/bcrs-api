@@ -86,18 +86,9 @@ exports.updateSecQuestion = asyncHandler(async (req, res, next) => {
  * @access      Private/admin
  */
 exports.deleteSecQuestion = asyncHandler(async (req, res, next) => {
-  const fieldToUpdate = {
-    isDisabled: true,
-  };
+  const question = await SecurityQuestion.findById(req.params.id);
 
-  const question = await SecurityQuestion.findByIdAndUpdate(
-    req.params.id,
-    fieldToUpdate,
-    {
-      new: false,
-      runValidators: true,
-    }
-  );
+  question.disable();
 
   res.status(200).json({
     success: true,
