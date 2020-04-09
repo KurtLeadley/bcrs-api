@@ -3,9 +3,9 @@
  * Author: Loren Wetzel
  * Description: bcrs-api
  */
-const ErrorResponse = require("../utils/errorResponse");
-const asyncHandler = require("../middleware/async");
-const SecurityQuestion = require("../models/SecurityQuestion");
+const ErrorResponse = require('../utils/errorResponse');
+const asyncHandler = require('../middleware/async');
+const SecurityQuestion = require('../models/SecurityQuestion');
 
 /**
  * @desc        Get all security questions
@@ -16,7 +16,7 @@ exports.getSecQuestions = asyncHandler(async (req, res, next) => {
   const questiions = await SecurityQuestion.find({}, (err, questions) => {
     if (err) {
       return next(
-        new ErrorResponse("Problem getting the security questions!", 500)
+        new ErrorResponse('Problem getting the security questions!', 500)
       );
     }
 
@@ -87,6 +87,7 @@ exports.updateSecQuestion = asyncHandler(async (req, res, next) => {
  */
 exports.deleteSecQuestion = asyncHandler(async (req, res, next) => {
   const fieldToUpdate = {
+    text: SecurityQuestion.text,
     isDisabled: true,
   };
 
@@ -94,7 +95,7 @@ exports.deleteSecQuestion = asyncHandler(async (req, res, next) => {
     req.params.id,
     fieldToUpdate,
     {
-      new: true,
+      new: false,
       runValidators: true,
     }
   );
