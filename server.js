@@ -3,23 +3,24 @@
  * Author: Nathaniel Liebhart
  * Description: bcrs-api
  */
-const express = require('express');
-const dotenv = require('dotenv');
-const morgan = require('morgan');
-const colors = require('colors');
-const cookieParser = require('cookie-parser');
-const errorHandler = require('./middleware/error');
-const connectDB = require('./config/db');
+const express = require("express");
+const dotenv = require("dotenv");
+const morgan = require("morgan");
+const colors = require("colors");
+const cookieParser = require("cookie-parser");
+const errorHandler = require("./middleware/error");
+const connectDB = require("./config/db");
 
 // Load env vars
-dotenv.config({ path: './config/config.env' });
+dotenv.config({ path: "./config/config.env" });
 
 // Connect to database
 connectDB();
 
 // Route files
-const auth = require('./routes/auth');
-const users = require('./routes/users');
+const auth = require("./routes/auth");
+const users = require("./routes/users");
+const securityQuestions = require("./routes/security-questions");
 
 // Initialize express
 const app = express();
@@ -31,13 +32,14 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Development logger middleware
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
 }
 
 // Mount routers
-app.use('/api/v1/auth', auth);
-app.use('/api/v1/users', users);
+app.use("/api/v1/auth", auth);
+app.use("/api/v1/users", users);
+app.use("/api/v1/security-questions", securityQuestions);
 
 // Initilize errorHandler middleware
 // mounted routes must be mounted before this statement
@@ -54,7 +56,7 @@ const server = app.listen(
 );
 
 // Handle unhandled Promise rejections
-process.on('unhandledRejection', (err, promise) => {
+process.on("unhandledRejection", (err, promise) => {
   console.log(`ERROR: ${err.message}`.red);
   // Close server and exit process
   server.close(() => process.exit(1));

@@ -3,9 +3,9 @@
  * Author: Nathaniel Liebhart
  * Description: bcrs-api
  */
-const ErrorResponse = require('../utils/errorResponse');
-const asyncHandler = require('../middleware/async');
-const User = require('../models/User');
+const ErrorResponse = require("../utils/errorResponse");
+const asyncHandler = require("../middleware/async");
+const User = require("../models/User");
 
 /**
  * @desc        Get all users
@@ -36,7 +36,7 @@ exports.getUser = asyncHandler(async (req, res, next) => {
  * @access      Private/admin
  */
 exports.createUser = asyncHandler(async (req, res, next) => {
-  const user = await User.create(req, body);
+  const user = await User.create(req.body);
 
   res.status(201).json({
     success: true,
@@ -68,7 +68,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
  */
 exports.deleteUser = asyncHandler(async (req, res, next) => {
   const fieldToUpdate = {
-    idDisabled: true,
+    idDisabled: req.body.idDisabled,
   };
 
   const user = await User.findByIdAndUpdate(req.params.id, fieldToUpdate);
