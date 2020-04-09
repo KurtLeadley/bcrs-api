@@ -82,12 +82,11 @@ exports.updateSecQuestion = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc        Delete security questions by id ** set isDisabled = true **
- * @route       PUT /api/v1/security-questions/:id
+ * @route       PATCH /api/v1/security-questions/:id
  * @access      Private/admin
  */
 exports.deleteSecQuestion = asyncHandler(async (req, res, next) => {
   const fieldToUpdate = {
-    text: SecurityQuestion.text,
     isDisabled: true,
   };
 
