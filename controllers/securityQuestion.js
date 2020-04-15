@@ -102,6 +102,36 @@ exports.deleteSecQuestion = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc        Get an array of security questions by id's
- * @route       GET /api/v1/security-questions/
+ * @route       POST /api/v1/security-questions/get-by-ids
  * @access      Private/admin
  */
+exports.findSecQuestionsByIds = asyncHandler(async (req, res, next) => {
+  // get the 3 questions the user picked out
+  const question1 = req.body.question1;
+  const question2 = req.body.question2;
+  const question3 = req.body.question3;
+
+  //find the 3 questions using mongoDB "$or"
+  const questions = await SecurityQuestion.find({
+    $or: [
+      { _id: question1 }, 
+      { _id: question2 }, 
+      { _id: question3 }
+    ]
+  }); //end of find
+
+ /**  this needs more but as of right now it finds the 3 questions in the database
+  this will be where the moongoose schema for securityQuestions comes into play
+  Mongoose: Schema
+  securityQuestions
+  questionId: {type: String}
+  answer: {type: String}
+
+  probably an if/else but working on that
+*/
+
+  res.status(200).json({
+    success: true,
+    data: questions,
+  });
+});

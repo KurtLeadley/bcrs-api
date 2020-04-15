@@ -10,6 +10,7 @@ const {
   createSecQuestion,
   updateSecQuestion,
   deleteSecQuestion,
+  findSecQuestionsByIds
 } = require('../controllers/securityQuestion');
 const SecurityQuestion = require('../models/SecurityQuestion');
 
@@ -31,5 +32,9 @@ router
   .get(getSecQuestion)
   .put(updateSecQuestion)
   .delete(deleteSecQuestion);
+
+router
+  .route('/get-by-ids')
+  .post(findSecQuestionsByIds);
 
 module.exports = router;
