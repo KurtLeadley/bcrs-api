@@ -112,23 +112,42 @@ exports.findSecQuestionsByIds = asyncHandler(async (req, res, next) => {
   const question3 = req.body.question3;
 
   //find the 3 questions using mongoDB "$or"
-  const questions = await SecurityQuestion.find({
-    $or: [
-      { _id: question1 }, 
-      { _id: question2 }, 
-      { _id: question3 }
-    ]
-  }); //end of find
+  const questions = await SecurityQuestion.find(
+    {
+      $or: [{ _id: question1 }, { _id: question2 }, { _id: question3 }],
+    },
+    // '_id text',
+    function (err) {
+      if (err) {
+        return next(
+          new ErrorResponse("Problem getting the security questions!", 500)
+        );
+      } //end if
+    }
+  ); //end of find
 
- /**  this needs more but as of right now it finds the 3 questions in the database
-  this will be where the moongoose schema for securityQuestions comes into play
-  Mongoose: Schema
-  securityQuestions
-  questionId: {type: String}
-  answer: {type: String}
+  /**
+   * I believe this is complete. the sprint requirements say
+   * 
+   * FindSecurityQuestionsByIds: /api/security-questions/find-by-ids
+   * This API will lookup security questions by security question Ids
+   * Hint: you are passing-in three security question Ids (the ones that the user selected when they registered) and 
+   *    returning an array of the security question documents
+   * Hint: use the MongoDB 'or' or Mongoose 'where" aggregates to chain the security question Ids
+   * 
+   * This returns just that... an array of documents. The output is not in the order it was received but it does check if 
+   *    the question id's are in the db. It outputs error if question id is not found. Does not output the specific
+   *    question that was not found. The rest of this is done in the user model and Angular UI during registration.
+   */
 
-  probably an if/else but working on that
-*/
+  /**  this needs more but as of right now it finds the 3 questions in the database
+   * this will be where the moongoose schema for securityQuestions comes into play
+   * Mongoose: Schema
+   * securityQuestions
+   * questionId: {type: String}
+   * answer: {type: String}
+   * probably an if/else but working on that
+   */
 
   res.status(200).json({
     success: true,
